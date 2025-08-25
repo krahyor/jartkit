@@ -56,9 +56,7 @@ pipeline {
         }
 
         stage('Approval') {
-            options {
-                beforeAgent true
-            }
+            agent none
             steps {
                 input message: "Do you want to proceed with deployment?"
             }
