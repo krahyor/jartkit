@@ -56,11 +56,11 @@ pipeline {
         }
 
         stage('Approval') {
-            when { beforeAgent true }
+            options {
+                beforeAgent true
+            }
             steps {
-                timeout(time: 2, unit: 'MINUTES') {
-                    input message: "Do you want to proceed with deployment?"
-                }
+                input message: "Do you want to proceed with deployment?"
             }
         }
 
