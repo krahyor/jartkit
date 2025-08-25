@@ -4,9 +4,26 @@ pipeline {
         booleanParam(name: 'RUN_DEPLOY', defaultValue: true, description: 'Should we deploy?')
     }
     stages {
+        
         stage('Build') {
             steps {
                 echo 'Building application...'
+            }
+        }
+        stage('Simulate Testing (Parallel)') {
+            parallel {
+                stage('Linux') {
+                    agent { label 'linux' }
+                    steps {
+                        echo 'Simulating tests on Linux'
+                    }
+                }
+                stage('Windows') {
+                    agent { label 'windows' }
+                    steps {
+                        echo 'Simulating tests on Windows'
+                    }
+                }
             }
         }
         stage('Test in Parallel') {
