@@ -5,16 +5,19 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the application...'
+                sh 'ls -l'
             }
         }
         stage('Test') {
             steps {
                 echo 'Running tests...'
+                sh 'ls -l'
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying the application...'
+                sh 'ls -l'
             }
         }
     }
