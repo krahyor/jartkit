@@ -13,19 +13,18 @@ pipeline {
             }
         }
 
-        stage('Unit Tests') {
-            steps {
-                echo 'Running unit tests...'
-                sh 'sleep 2'
-            }
-        }
-
         stage('Test in Parallel') {
             parallel {
+                stage('Unit Tests') {
+                    steps {
+                        echo 'Running unit tests...'
+                        sh 'sleep 5'
+                    }
+                }
                 stage('Integration Tests') {
                     steps {
                         echo 'Running integration tests...'
-                        sh 'sleep 2'
+                        sh 'sleep 5'
                     }
                 }
             }
@@ -57,6 +56,9 @@ pipeline {
 
         stage('Approval') {
             agent none
+            options {
+                timeout(time: 2, unit: 'MINUTES')
+            }
             steps {
                 input message: "Do you want to proceed with deployment?"
             }
@@ -67,7 +69,7 @@ pipeline {
                 expression { return params.RUN_DEPLOY }
             }
             steps {
-                echo "Deploying application to ${params.ENVIRONMENT} environment..."
+                echo "🚀 Deploying application to ${params.ENVIRONMENT} environment..."
             }
         }
     }
