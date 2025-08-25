@@ -16,5 +16,13 @@ pipeline {
                 echo 'Deploying the application...'
             }
         }
+        post {
+            success {
+                echo 'Pipeline completed successfully! ✅'
+            }
+            failure {
+                echo 'Pipeline failed 💥'
+            }
+        }
     }
 }
