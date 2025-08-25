@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     stages {
         stage('Build') {
             steps {
@@ -16,13 +17,14 @@ pipeline {
                 echo 'Deploying the application...'
             }
         }
-        post {
-            success {
-                echo 'Pipeline completed successfully! ✅'
-            }
-            failure {
-                echo 'Pipeline failed 💥'
-            }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully! ✅'
+        }
+        failure {
+            echo 'Pipeline failed 💥'
         }
     }
 }
