@@ -4,6 +4,27 @@ pipeline {
         booleanParam(name: 'RUN_DEPLOY', defaultValue: true, description: 'Should we deploy?')
     }
     stages {
+        stage('Build') {
+            steps {
+                echo 'Building application...'
+            }
+        }
+        stage('Test in Parallel') {
+            parallel {
+                stage('Unit Tests') {
+                    steps {
+                        echo 'Running unit tests...'
+                        sh 'sleep 5'
+                    }
+                }
+                stage('Integration Tests') {
+                    steps {
+                        echo 'Running integration tests...'
+                        sh 'sleep 5'
+                    }
+                }
+            }
+        }
         stage('Test') {
             steps {
                 sh 'echo "All tests passed!" > results.txt'
@@ -24,7 +45,7 @@ pipeline {
             }
         }
     }
-    
+
     post {
         success {
             echo '✅ Pipeline finished successfully!'
